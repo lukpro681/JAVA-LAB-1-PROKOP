@@ -1,9 +1,16 @@
 import java.util.Objects;
 
+
+
 public class FractionLP {
     private int num;
     private int den;
 
+    /**
+     *
+     * @param num licznik
+     * @param den mianownik
+     */
     public FractionLP(int num, int den) {
         if (den == 0) {
             throw new IllegalArgumentException("Parametr n=0!");
@@ -13,6 +20,10 @@ public class FractionLP {
         correction();
         reduce();
     }
+
+    /**
+     * korekcja na ułamek ujemny
+     */
     private void correction() {
         if (den < 0) {
             num = -num;
@@ -27,11 +38,19 @@ public class FractionLP {
         this(m, 1);
     }
 
+    /**
+     *
+     * @param other
+     */
     public FractionLP(FractionLP other) {
         this.num = other.num;
         this.den = other.den;
     }
 
+    /**
+     *
+     * Gettery ułamka
+     */
     public int getNum() {
         return num;
     }
@@ -40,6 +59,10 @@ public class FractionLP {
         return den;
     }
 
+    /**
+     *
+     * settery ułamka
+     */
     public void setNum(int num) {
         this.num = num;
     }
@@ -58,24 +81,45 @@ public class FractionLP {
         this.num = num;
         this.den = den;
     }
+
+    /**
+     * Dodawanie ułamków
+     * @param other obiekt klasy FractionLP
+     * @return zwrócenie wyniku
+     */
     public FractionLP add(FractionLP other) {
         int newNum = this.num * other.den + other.num * this.den;
         int newden = this.den * other.den;
         return new FractionLP(newNum, newden);
     }
 
+    /**
+     *  odejmowanie
+     * @param other obiekt klasy FractionLP
+     * @return zwrócenie wyniku
+     */
     public FractionLP subtract(FractionLP other) {
         int newNum = this.num * other.den - other.num * this.den;
         int newDenominator = this.den * other.den;
         return new FractionLP(newNum, newDenominator);
     }
 
+    /**
+     * mnożenie
+     *  @param other obiekt klasy FractionLP
+      * @return zwrócenie wyniku
+     */
     public FractionLP multiply(FractionLP other) {
         int newNum = this.num * other.num;
         int newDenominator = this.den * other.den;
         return new FractionLP(newNum, newDenominator);
     }
 
+    /**
+     * dzielenie
+     * @param other obiekt klasy FractionLP
+     * @return zwrócenie wyniku
+     */
     public FractionLP divide(FractionLP other) {
         int newnum = this.num * other.den;
         int newden = this.den * other.num;
@@ -97,7 +141,9 @@ public class FractionLP {
             return nwd(b, a % b);
         }
     }
-
+    /**
+     * skracanie ułamka
+     */
     public void reduce() {
         int nwd = nwd(Math.abs(num), den);
         num /= nwd;
@@ -111,6 +157,11 @@ public class FractionLP {
         }
     }
 
+    /**
+     * Rozszerzenie ułamka
+     * @param d rozszerzenie
+     * @return
+     */
     public FractionLP equivalent(int d) {
         num *= d;
         den *= d;
@@ -158,6 +209,7 @@ public class FractionLP {
         return Objects.hash(num, den);
     }
 
+
     public static void main(String[] args) {
         FractionLP a = new FractionLP(75, 100);
         FractionLP b = new FractionLP(15, 20);
@@ -198,4 +250,18 @@ public class FractionLP {
         FractionLP wynik2 = FractionLP.product(f2, 2);
         System.out.println(f2 + " * " + "2" + " = " + wynik2);
     }
+
+    /**
+     *
+     * @param x obiekt FractionLP
+     * @return zwraca wynik
+     */
+
+    public static double toDouble(FractionLP x) { return (double) x.num / x.den; }
+
+    public static float toFloat(FractionLP x) { return (float) x.num / x.den; }
+
+    public static float toInt(FractionLP x) { return (int) x.num / x.den; }
+
+    public static String toString(FractionLP x) { return (String) "x.num / x.den"; }
 }
